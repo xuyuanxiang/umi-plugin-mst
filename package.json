@@ -1,0 +1,89 @@
+{
+  "name": "umi-plugin-mst",
+  "version": "1.0.0",
+  "description": "umi plugin for MobX-state-tree",
+  "keywords": [
+    "mobx",
+    "mobx-state-tree",
+    "umi",
+    "umijs",
+    "umi-plugin"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "author": {
+    "name": "xuyuanxiang",
+    "email": "hi@xuyuanxiang.cn",
+    "url": "https://xuyuanxiang.me/about/"
+  },
+  "homepage": "https://github.com/xuyuanxiang/umi-plugin-mst#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuyuanxiang/umi-plugin-mst.git"
+  },
+  "scripts": {
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/xuyuanxiang/umi-plugin-mst/issues"
+  },
+  "peerDependencies": {
+    "umi": "^3.0.0"
+  },
+  "dependencies": {
+    "mobx": "~5.15.0",
+    "mobx-react": "~6.2.0",
+    "mobx-state-tree": "~3.16.0"
+  },
+  "devDependencies": {
+    "@types/jest": "~26.0.3",
+    "@types/node": "10",
+    "@typescript-eslint/eslint-plugin": "~3.5.0",
+    "@typescript-eslint/parser": "~3.5.0",
+    "eslint": "~7.3.1",
+    "eslint-config-prettier": "~6.11.0",
+    "eslint-config-standard": "~14.1.1",
+    "eslint-plugin-import": "~2.22.0",
+    "eslint-plugin-jest": "~23.17.1",
+    "eslint-plugin-node": "~11.1.0",
+    "eslint-plugin-prettier": "~3.1.4",
+    "eslint-plugin-promise": "~4.2.1",
+    "eslint-plugin-standard": "~4.0.1",
+    "husky": "~4.2.5",
+    "jest": "~26.1.0",
+    "lint-staged": "~10.2.11",
+    "prettier": "~2.0.5",
+    "ts-jest": "~26.1.1",
+    "typescript": "~3.9.6",
+    "umi": "^3.0.0",
+    "validate-commit-msg": "~2.14.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "validate-commit-msg"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
+  }
+}
