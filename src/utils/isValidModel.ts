@@ -31,7 +31,7 @@ export default function isValidModel({ content }: { content: string }) {
         program.traverse({
           ImportDeclaration(path: utils.traverse.NodePath<ImportDeclaration>) {
             const source = path.node.source.value;
-            if (source === 'mobx-state-tree' || source === 'umi') {
+            if (source === 'mobx-state-tree') {
               if (path.node.specifiers.some((it) => t.isImportSpecifier(it) && it.imported.name === 'types')) {
                 typesHasImported = true;
               }

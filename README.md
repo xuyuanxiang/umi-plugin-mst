@@ -1,10 +1,8 @@
 # umi-plugin-mst
 
-> 正在施工
-
 针对 [MobX](https://mobx.js.org) 的 [umi](https://umijs.org/) 插件，需要 umi **3.0 及以上（>= 3.0.0）版本**。
 
-提供 [@umijs/plugin-dva](https://umijs.org/zh-CN/plugins/plugin-dva) 和 [@umijs/plugin-model](https://umijs.org/zh-CN/plugins/plugin-model) 之外的另一种选择。
+提供 dva 之外的另一种选择。
 
 **umi-plugin-mst** 内置：
 
@@ -12,7 +10,9 @@
 - [mobx-state-tree@3.16.x](https://mobx-state-tree.js.org)
 - [mobx-react@6.2.x](https://github.com/mobxjs/mobx-react)
 
-**零配置，安装 umi-plugin-mst 后开箱即用。**
+可以和 [@umijs/plugin-dva](https://umijs.org/zh-CN/plugins/plugin-dva), [@umijs/plugin-model](https://umijs.org/zh-CN/plugins/plugin-model) 一起使用。
+
+**在`models/`目录下同时存在三种类型（dva、hooks、mobx）的 model 时，不会冲突。**
 
 ## 安装
 
@@ -32,31 +32,90 @@ yarn add umi-plugin-mst --dev
 
 ```diff
 ├── package.json
-├── .umirc.ts
-├── .env
-├── dist
-├── mock
-├── public
 └── src
-    ├── .umi
-    ├── layouts/index.tsx
 +   ├── models
-+       ├── foo.ts
-+       └── bar.ts
++       └── foo.ts
     ├── pages
-        ├── index.less
         └── index.tsx
     └── app.ts
 ```
 
-#### models 目录
+在 `models/` 目录下有 [types.model](https://mobx-state-tree.js.org/concepts/trees) 时启用 **umi-plugin-mst**:
 
-在 `models/` 目录下有 [types.model](https://mobx-state-tree.js.org/concepts/trees) 时启用 **umi-plugin-mst**。
+```typescript
+/**
+ * @file src/models/foo.js
+ */
+import { types } from 'mobx-state-tree';
 
-#### 连接数据的三种方式
+const Foo = types
+  .model({
+    bar: types.optional(types.string, ''),
+  })
+  .actions((self) => ({
+    setBar(text: string) {
+      self.bar = text;
+    },
+    clearBar() {
+      self.bar = '';
+    },
+  }));
 
-##### 使用 Decorator
+export default Foo.create({});
+```
 
-##### 使用 Hooks
+使用 Hooks 连接数据到视图：
 
-##### 使用 HOC
+```tsx
+/**
+ * @file src/pages/index.js
+ */
+import React from 'react';
+import { useMst, observer } from 'umi';
+
+function Index(): JSX.Element {
+  const { foo } = useMst();
+  return (
+    <div>
+      record: {JSON.stringify(foo)}
+      <input value={foo.bar} onChange={(event) => foo.setBar(event.target.value)} />
+      <button onClick={foo.clearBar}>Clear</button>
+    </div>
+  );
+}
+
+export default observer(Index);
+```
+
+使用 Decorator 连接数据到视图：
+
+```tsx
+/**
+ * @file src/pages/home.js
+ */
+import React, { Component } from 'react';
+import { Instance } from 'mobx-state-tree';
+import { observer, inject } from 'umi';
+import foo from '@/models/foo';
+
+type FooInstance = Instance<typeof foo>;
+
+interface IHomeProps {
+  foo: FooInstance;
+}
+
+@inject('foo')
+@observer
+export default class Home extends Component<IHomeProps> {
+  render(): JSX.Element {
+    const foo = this.props.foo;
+    return (
+      <div>
+        record: {JSON.stringify(foo)}
+        <input value={foo.bar} onChange={(event) => foo.setBar(event.target.value)} />
+        <button onClick={foo.clearBar}>Clear</button>
+      </div>
+    );
+  }
+}
+```

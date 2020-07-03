@@ -1,0 +1,12 @@
+{
+  "name": "umi-plugin-mst-example",
+  "version": "1.0.0",
+  "description": "Example for umi-plugin-mst",
+  "scripts": {
+    "start": "umi dev"
+  },
+  "devDependencies": {
+    "umi": "^3.0.0",
+    "umi-plugin-mst": "file:../"
+  }
+}

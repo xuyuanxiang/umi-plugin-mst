@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "jsx": "react",
     "target": "ES5",
     "module": "CommonJS",
     "lib": ["es2020"],
@@ -16,6 +15,5 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "include": ["src", "types"],
-  "exclude": ["src/__tests__"]
+  "include": ["src"]
 }

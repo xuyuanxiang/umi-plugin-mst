@@ -8,7 +8,7 @@ export default function getModels(opts: {
   pattern?: string;
   skipModelValidate?: boolean;
   extraModels?: string[];
-}) {
+}): string[] {
   return utils.lodash
     .uniq(
       utils.glob
