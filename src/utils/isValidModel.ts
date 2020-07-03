@@ -1,5 +1,14 @@
 import { utils } from 'umi';
-import { Program, ImportDeclaration, CallExpression, MemberExpression, ExportDefaultDeclaration } from '@babel/types';
+import {
+  Program,
+  ImportDeclaration,
+  CallExpression,
+  MemberExpression,
+  ExportDefaultDeclaration,
+  ImportSpecifier,
+  ImportDefaultSpecifier,
+  ImportNamespaceSpecifier,
+} from '@babel/types';
 
 const { t, traverse } = utils;
 
@@ -32,7 +41,12 @@ export default function isValidModel({ content }: { content: string }) {
           ImportDeclaration(path: utils.traverse.NodePath<ImportDeclaration>) {
             const source = path.node.source.value;
             if (source === 'mobx-state-tree') {
-              if (path.node.specifiers.some((it) => t.isImportSpecifier(it) && it.imported.name === 'types')) {
+              if (
+                path.node.specifiers.some(
+                  (it: ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier) =>
+                    t.isImportSpecifier(it) && it.imported.name === 'types',
+                )
+              ) {
                 typesHasImported = true;
               }
             }
