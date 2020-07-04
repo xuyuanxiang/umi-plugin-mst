@@ -34,8 +34,8 @@ yarn add umi-plugin-mst --dev
 +   ├── models
 +       └── foo.ts
     ├── pages
+        ├── home.tsx
         └── index.tsx
-    └── app.ts
 ```
 
 在 `models/` 目录下有 [types.model](https://mobx-state-tree.js.org/concepts/trees) 时启用 **umi-plugin-mst**:
