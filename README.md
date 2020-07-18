@@ -49,7 +49,7 @@ Using mobx-state-tree (MST) with React Hooks (**recommended**):
 
 ```tsx
 /**
- * @file src/pages/index.tsx
+ * @file pages/index.tsx
  */
 import React from 'react';
 import { useMst, observer } from 'umi';
